@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Penggunaan StokKu</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b6cf4;
+            --green: #10b981;
+            --bg: #f8fafc;
+            --surface: #fff;
+            --border: #e5e7eb;
+            --text: #111827;
+            --muted: #6b7280;
+            --sidebar-w: 252px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        @media print {
+
+            .sidebar,
+            .topbar,
+            .print-hide {
+                display: none !important;
+            }
+
+            .main {
+                margin-left: 0 !important;
+            }
+
+            body {
+                font-size: 12px;
+                background: #fff;
+            }
+
+            .section {
+                break-inside: avoid;
+            }
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-w);
+            background: #0d0f1a;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #1e2a36;
+        }
+
+        .sidebar-logo {
+            padding: 18px 16px 14px;
+            font-weight: 800;
+            font-size: 16px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            position: sticky;
+            top: 0;
+            background: #0d0f1a;
+            z-index: 1;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+
+        .logo-green {
+            color: #10b981;
+        }
+
+        .sidebar-ver {
+            font-size: 9px;
+            color: rgba(255, 255, 255, .2);
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        .nav-group {
+            padding: 12px 8px 4px;
+        }
+
+        .nav-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, .2);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            padding: 0 8px 5px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 8px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, .45);
+            text-decoration: none;
+            transition: all .15s;
+            margin-bottom: 1px;
+        }
+
+        .sidebar a:hover {
+            color: rgba(255, 255, 255, .8);
+            background: rgba(255, 255, 255, .05);
+        }
+
+        .sidebar a.active {
+            color: #10b981;
+            background: rgba(16, 185, 129, .1);
+        }
+
+        .ni {
+            font-size: 13px;
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .main {
+            margin-left: var(--sidebar-w);
+            min-height: 100vh;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(248, 250, 252, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 11px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar-bc {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .topbar-bc span {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .btn-print {
+            background: #0d0f1a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            transition: all .15s;
+        }
+
+        .btn-print:hover {
+            background: #1a1d2e;
+        }
+
+        .content {
+            padding: 48px;
+            max-width: 860px;
+        }
+
+        .cover {
+            background: linear-gradient(135deg, #0d0f1a 0%, #1a2240 60%, #0d1f33 100%);
+            border-radius: 20px;
+            padding: 52px 48px;
+            margin-bottom: 52px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(ellipse at 20% 50%, rgba(59, 108, 244, .2) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(16, 185, 129, .12) 0%, transparent 50%);
+        }
+
+        .cover-in {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, .12);
+            border: 1px solid rgba(16, 185, 129, .25);
+            border-radius: 99px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #10b981;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .cover h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .cover h1 em {
+            color: #10b981;
+            font-style: normal;
+        }
+
+        .cover-desc {
+            font-size: 15px;
+            color: rgba(255, 255, 255, .55);
+            max-width: 480px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .cover-chips {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 99px;
+            padding: 5px 13px;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .55);
+        }
+
+        .section {
+            margin-bottom: 58px;
+        }
+
+        .sec-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sec-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .sec-title {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        .sec-sub {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 26px 0 10px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3::before {
+            content: '';
+            width: 3px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 99px;
+            flex-shrink: 0;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        ul,
+        ol {
+            padding-left: 22px;
+            margin-bottom: 14px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        strong {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            padding: 1px 6px;
+            color: #2563eb;
+        }
+
+        kbd {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-bottom: 2px solid #9ca3af;
+            border-radius: 4px;
+            padding: 1px 7px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+        }
+
+        .callout {
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+            align-items: flex-start;
+        }
+
+        .callout.info {
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .callout.success {
+            background: #f0fdf4;
+            border-left: 3px solid #10b981;
+        }
+
+        .callout.warning {
+            background: #fffbeb;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .callout.danger {
+            background: #fef2f2;
+            border-left: 3px solid #ef4444;
+        }
+
+        .ci {
+            font-size: 17px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .cb {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .cb strong {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            margin: 16px 0;
+        }
+
+        .si {
+            display: flex;
+            gap: 16px;
+            padding-bottom: 24px;
+            position: relative;
+        }
+
+        .si:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 33px;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), #e5e7eb);
+        }
+
+        .sn {
+            width: 32px;
+            height: 32px;
+            border-radius: 99px;
+            flex-shrink: 0;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(59, 108, 244, .25);
+        }
+
+        .sc {
+            flex: 1;
+            padding-top: 4px;
+        }
+
+        .st {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .sd {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .sd strong {
+            color: #374151;
+        }
+
+        .dtable {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .dtable th {
+            background: #f9fafb;
+            padding: 10px 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dtable td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+        }
+
+        .dtable tr:last-child td {
+            border-bottom: none;
+        }
+
+        .dtable tr:hover td {
+            background: #f9fafb;
+        }
+
+        .dtable td:first-child {
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 9px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .b-blue {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .b-green {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .b-amber {
+            background: #fffbeb;
+            color: #d97706;
+        }
+
+        .b-red {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .b-purple {
+            background: #f5f3ff;
+            color: #7c3aed;
+        }
+
+        .b-slate {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .cgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .ccard {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .ccard-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .ccard-title {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .ccard-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-q {
+            padding: 13px 18px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: background .15s;
+        }
+
+        .faq-q:hover {
+            background: #f9fafb;
+        }
+
+        .faq-tog {
+            color: var(--muted);
+            font-size: 18px;
+            flex-shrink: 0;
+            transition: transform .25s;
+            line-height: 1;
+        }
+
+        .faq-a {
+            padding: 0 18px;
+            font-size: 13px;
+            color: var(--muted);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease, padding .2s;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 300px;
+            padding: 0 18px 14px;
+        }
+
+        .faq-item.open .faq-q {
+            background: #f9fafb;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item.open .faq-tog {
+            transform: rotate(45deg);
+            color: var(--primary);
+        }
+
+        .rcheck {
+            color: #10b981;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .rcross {
+            color: #d1d5db;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        @media(max-width:768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 24px;
+            }
+
+            .cgrid {
+                grid-template-columns: 1fr;
+            }
+
+            .cover {
+                padding: 32px 24px;
+            }
+
+            .cover h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <div class="dot"></div>Stok<span class="logo-green">Ku</span><span class="sidebar-ver">v2.1</span>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">Kasir & Transaksi</div>
+            <a href="#login"><span class="ni">🔐</span> Login</a>
+            <a href="#pos"><span class="ni">🏧</span> Kasir (POS)</a>
+            <a href="#retur"><span class="ni">↩️</span> Retur / Refund</a>
+            <a href="#voucher"><span class="ni">🎟️</span> Pakai Voucher</a>
+            <a href="#struk"><span class="ni">🧾</span> Struk & Nota WA</a>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">Inventori</div>
+            <a href="#produk"><span class="ni">📦</span> Master Produk</a>
+            <a href="#barcode"><span class="ni">🏷️</span> Cetak Label Barcode</a>
+            <a href="#restock"><span class="ni">🚛</span> Restock (PO)</a>
+            <a href="#opname"><span class="ni">📋</span> Stok Opname</a>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">Pelanggan & Harga</div>
+            <a href="#pelanggan"><span class="ni">👥</span> Master Pelanggan</a>
+            <a href="#tier"><span class="ni">🏷️</span> Kelompok Harga</a>
+            <a href="#supplier"><span class="ni">🚚</span> Master Supplier</a>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">Laporan & Keuangan</div>
+            <a href="#laporan"><span class="ni">📊</span> Laporan Penjualan</a>
+            <a href="#pl"><span class="ni">⚖️</span> P&L / Laba Rugi</a>
+            <a href="#pengeluaran"><span class="ni">💸</span> Catat Pengeluaran</a>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">Admin</div>
+            <a href="#promo"><span class="ni">🎁</span> Promo & Voucher</a>
+            <a href="#user"><span class="ni">👤</span> Manajemen User</a>
+            <a href="#pengaturan"><span class="ni">⚙️</span> Pengaturan Toko</a>
+            <a href="#faq"><span class="ni">❓</span> FAQ</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="topbar print-hide">
+            <div class="topbar-bc">Panduan <span>StokKu ERP</span></div>
+            <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+        </div>
+        <div class="content">
+
+            <!-- COVER -->
+            <div class="cover" id="cover">
+                <div class="cover-in">
+                    <div class="cover-tag">📖 Panduan Penggunaan</div>
+                    <h1>Cara Pakai<br><em>StokKu ERP</em></h1>
+                    <p class="cover-desc">Panduan lengkap penggunaan aplikasi StokKu — dari transaksi kasir, kelola
+                        stok, hingga membaca laporan laba rugi toko Anda.</p>
+                    <div class="cover-chips">
+                        <div class="chip">🏧 Kasir & POS</div>
+                        <div class="chip">📦 Manajemen Stok</div>
+                        <div class="chip">📊 Laporan P&L</div>
+                        <div class="chip">🎟️ Promo & Voucher</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGIN -->
+            <div class="section" id="login">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#eff6ff;">🔐</div>
+                    <div>
+                        <div class="sec-title">Login</div>
+                        <div class="sec-sub">Cara masuk ke aplikasi</div>
+                    </div>
+                </div>
+                <p>Buka link aplikasi di browser, masukkan <strong>Username</strong> dan <strong>Password</strong> yang
+                    diberikan, lalu klik <strong>Masuk Sekarang</strong>.</p>
+                <div class="callout success">
+                    <div class="ci">💡</div>
+                    <div class="cb"><strong>Akses Cepat dari HP</strong>Di Chrome: klik menu ⋮ → "Add to Home Screen" →
+                        aplikasi bisa dibuka dari homescreen seperti app biasa.</div>
+                </div>
+                <div class="callout warning">
+                    <div class="ci">🔒</div>
+                    <div class="cb"><strong>Keamanan</strong>Jangan bagikan password ke orang lain. Setiap kasir
+                        sebaiknya punya akun sendiri. Ganti password melalui menu Manajemen User.</div>
+                </div>
+            </div>
+
+            <!-- POS -->
+            <div class="section" id="pos">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f0fdf4;">🏧</div>
+                    <div>
+                        <div class="sec-title">Kasir (POS)</div>
+                        <div class="sec-sub">Cara melakukan transaksi penjualan</div>
+                    </div>
+                </div>
+                <h3>Langkah Transaksi</h3>
+                <div class="steps">
+                    <div class="si">
+                        <div class="sn">1</div>
+                        <div class="sc">
+                            <div class="st">Cari atau Scan Produk</div>
+                            <div class="sd">Ketik nama di kolom pencarian atau scan barcode. Tekan <kbd>Enter</kbd>
+                                untuk langsung pilih jika hanya 1 hasil.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">2</div>
+                        <div class="sc">
+                            <div class="st">Tambah ke Keranjang</div>
+                            <div class="sd"><strong>Klik baris produk</strong> langsung (mana saja di baris tersebut)
+                                untuk masuk keranjang. Klik berulang untuk tambah qty. Bisa juga klik tombol
+                                <strong>+</strong> di kolom kanan.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">3</div>
+                        <div class="sc">
+                            <div class="st">Pilih Pelanggan (opsional)</div>
+                            <div class="sd">Klik "<strong>Pelanggan: UMUM</strong>" di atas keranjang → cari nama →
+                                pilih. Harga otomatis menyesuaikan kelompok harga pelanggan.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">4</div>
+                        <div class="sc">
+                            <div class="st">Pilih Metode Bayar & Isi Nominal</div>
+                            <div class="sd">Pilih Tunai, QRIS, Transfer, atau Debit. Untuk Tunai: isi nominal yang
+                                diterima. Untuk non-Tunai: nominal otomatis terisi.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">5</div>
+                        <div class="sc">
+                            <div class="st">Klik BAYAR SEKARANG</div>
+                            <div class="sd">Transaksi selesai. Pilih <strong>Cetak Struk</strong> untuk mencetak struk
+                                fisik.</div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Fitur Tambahan di Keranjang</h3>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Fitur</th>
+                            <th>Cara Pakai</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ubah Qty</td>
+                            <td>Klik − atau + di keranjang, atau ketik langsung di kolom angka qty.</td>
+                        </tr>
+                        <tr>
+                            <td>Hapus Item</td>
+                            <td>Klik ikon 🗑️ di sebelah kanan item.</td>
+                        </tr>
+                        <tr>
+                            <td>Edit Harga / Diskon per Item</td>
+                            <td>Klik ikon ✏️ → ubah harga satuan atau tambah potongan → Terapkan.</td>
+                        </tr>
+                        <tr>
+                            <td>Ganti Satuan (Eceran / Dus)</td>
+                            <td>Jika produk punya satuan besar, muncul dropdown untuk pilih eceran atau satuan besar.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Diskon Global</td>
+                            <td>Isi kolom <strong>Diskon Manual (Rp)</strong> di bawah keranjang.</td>
+                        </tr>
+                        <tr>
+                            <td>PPN</td>
+                            <td>Centang PPN → pilih Exclude (ditambah ke total) atau Include (sudah dalam harga).</td>
+                        </tr>
+                        <tr>
+                            <td>Kosongkan Keranjang</td>
+                            <td>Klik ikon 🗑️ merah di pojok kanan atas panel keranjang.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout info">
+                    <div class="ci">📶</div>
+                    <div class="cb"><strong>Kalau Internet Mati</strong>Transaksi tetap bisa dilakukan. Badge kuning "X
+                        Pending" muncul di topbar. Saat internet kembali, klik badge atau tunggu sinkronisasi otomatis.
+                    </div>
+                </div>
+                <h3>Histori Transaksi Hari Ini</h3>
+                <p>Klik tombol <strong>Histori</strong> di pojok kanan kolom pencarian untuk lihat semua transaksi hari
+                    ini dan cetak ulang struk dari sini.</p>
+            </div>
+
+            <!-- RETUR -->
+            <div class="section" id="retur">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fef2f2;">↩️</div>
+                    <div>
+                        <div class="sec-title">Retur / Refund</div>
+                        <div class="sec-sub">Proses pengembalian barang dari pelanggan</div>
+                    </div>
+                </div>
+                <div class="steps">
+                    <div class="si">
+                        <div class="sn">1</div>
+                        <div class="sc">
+                            <div class="st">Aktifkan Mode Retur</div>
+                            <div class="sd">Centang kotak <strong>Retur</strong> di sebelah kanan kolom pencarian.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">2</div>
+                        <div class="sc">
+                            <div class="st">Tambahkan Produk yang Dikembalikan</div>
+                            <div class="sd">Cari dan klik produk seperti biasa. Qty akan menjadi negatif. Stok otomatis
+                                bertambah kembali saat transaksi disimpan.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">3</div>
+                        <div class="sc">
+                            <div class="st">Klik BAYAR SEKARANG</div>
+                            <div class="sd">Total bernilai negatif (uang keluar ke pelanggan). Struk menampilkan
+                                keterangan Retur.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOUCHER -->
+            <div class="section" id="voucher">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fffbeb;">🎟️</div>
+                    <div>
+                        <div class="sec-title">Pakai Voucher di Kasir</div>
+                        <div class="sec-sub">Input kode diskon saat transaksi</div>
+                    </div>
+                </div>
+                <div class="steps">
+                    <div class="si">
+                        <div class="sn">1</div>
+                        <div class="sc">
+                            <div class="st">Isi Keranjang Terlebih Dahulu</div>
+                            <div class="sd">Tambahkan semua produk yang dibeli.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">2</div>
+                        <div class="sc">
+                            <div class="st">Ketik Kode Voucher</div>
+                            <div class="sd">Ketik kode di kolom <strong>"Kode voucher..."</strong> di bawah kolom
+                                diskon. Kode otomatis jadi huruf kapital.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">3</div>
+                        <div class="sc">
+                            <div class="st">Klik "Pakai"</div>
+                            <div class="sd">Sistem validasi otomatis. Jika valid, diskon langsung dihitung. Klik ✕ untuk
+                                batalkan voucher.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="callout warning">
+                    <div class="ci">⚠️</div>
+                    <div class="cb"><strong>Jika Voucher Ditolak</strong>Kemungkinan: kode salah, sudah kadaluarsa, atau
+                        subtotal belum memenuhi minimal belanja. Konfirmasi ke admin.</div>
+                </div>
+            </div>
+
+            <!-- STRUK -->
+            <div class="section" id="struk">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f5f3ff;">🧾</div>
+                    <div>
+                        <div class="sec-title">Struk & Nota WA</div>
+                        <div class="sec-sub">Cetak struk thermal dan kirim nota ke pelanggan</div>
+                    </div>
+                </div>
+                <div class="cgrid">
+                    <div class="ccard">
+                        <div class="ccard-icon">🖨️</div>
+                        <div class="ccard-title">Cetak Struk Kasir</div>
+                        <div class="ccard-desc">Setelah bayar → klik <strong>Cetak Struk Kasir</strong>. Pilih printer
+                            thermal di dialog print.</div>
+                    </div>
+                    <div class="ccard">
+                        <div class="ccard-icon">📱</div>
+                        <div class="ccard-title">Kirim Nota WhatsApp</div>
+                        <div class="ccard-desc">Klik <strong>Kirim Nota ke WhatsApp</strong> → nomor WA pelanggan
+                            terdaftar otomatis terisi → kirim.</div>
+                    </div>
+                    <div class="ccard">
+                        <div class="ccard-icon">🔁</div>
+                        <div class="ccard-title">Cetak Ulang</div>
+                        <div class="ccard-desc">Buka <strong>Histori</strong> di POS → cari transaksi → klik ikon 🖨️
+                            untuk cetak ulang.</div>
+                    </div>
+                    <div class="ccard">
+                        <div class="ccard-icon">📐</div>
+                        <div class="ccard-title">Ukuran Kertas</div>
+                        <div class="ccard-desc">Atur di <strong>Pengaturan Toko</strong> → pilih 58mm atau 80mm sesuai
+                            printer Anda.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUK -->
+            <div class="section" id="produk">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#eff6ff;">📦</div>
+                    <div>
+                        <div class="sec-title">Master Produk</div>
+                        <div class="sec-sub">Input dan kelola data produk</div>
+                    </div>
+                </div>
+                <h3>Tambah Produk Baru</h3>
+                <p>Menu <strong>Master Produk</strong> → klik <strong>+ Tambah</strong>:</p>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Keterangan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SKU / Barcode</td>
+                            <td>Kode unik produk (angka barcode atau kode manual)</td>
+                            <td><span class="badge b-red">Wajib</span></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Produk</td>
+                            <td>Nama yang tampil di POS dan laporan</td>
+                            <td><span class="badge b-red">Wajib</span></td>
+                        </tr>
+                        <tr>
+                            <td>HPP / Modal</td>
+                            <td>Harga beli produk — digunakan untuk hitung laba</td>
+                            <td><span class="badge b-amber">Disarankan</span></td>
+                        </tr>
+                        <tr>
+                            <td>Harga Jual</td>
+                            <td>Harga normal untuk pelanggan umum</td>
+                            <td><span class="badge b-red">Wajib</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stok Awal</td>
+                            <td>Jumlah stok saat pertama input</td>
+                            <td><span class="badge b-amber">Disarankan</span></td>
+                        </tr>
+                        <tr>
+                            <td>Harga Grosir & Min. Grosir</td>
+                            <td>Harga khusus jika qty pembelian mencapai minimum tertentu</td>
+                            <td><span class="badge b-slate">Opsional</span></td>
+                        </tr>
+                        <tr>
+                            <td>Harga Reseller</td>
+                            <td>Harga khusus pelanggan kelompok Reseller</td>
+                            <td><span class="badge b-slate">Opsional</span></td>
+                        </tr>
+                        <tr>
+                            <td>Satuan Besar (Dus/Karton)</td>
+                            <td>Nama satuan besar + isi per satuan + harga jual satuan besar</td>
+                            <td><span class="badge b-slate">Opsional</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Edit & Hapus Produk</h3>
+                <ul>
+                    <li><strong>Edit:</strong> Klik ✏️ pada baris produk. HPP dan stok tidak bisa diubah dari sini —
+                        keduanya dikelola otomatis via transaksi dan opname.</li>
+                    <li><strong>Hapus:</strong> Klik 🗑️. Produk disembunyikan dari POS tapi histori transaksi tetap
+                        tersimpan.</li>
+                </ul>
+            </div>
+
+            <!-- BARCODE -->
+            <div class="section" id="barcode">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f0fdf4;">🏷️</div>
+                    <div>
+                        <div class="sec-title">Cetak Label Barcode</div>
+                        <div class="sec-sub">Buat dan cetak label stiker produk</div>
+                    </div>
+                </div>
+                <div class="steps">
+                    <div class="si">
+                        <div class="sn">1</div>
+                        <div class="sc">
+                            <div class="st">Pilih Produk</div>
+                            <div class="sd">Centang checkbox di kolom paling kiri untuk produk yang ingin dicetak. Jika
+                                tidak ada yang dipilih, sistem tanya apakah cetak semua.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">2</div>
+                        <div class="sc">
+                            <div class="st">Klik "Cetak Label"</div>
+                            <div class="sd">Tombol ada di pojok kanan atas halaman Master Produk.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">3</div>
+                        <div class="sc">
+                            <div class="st">Pilih Ukuran Stiker</div>
+                            <div class="sd">4 pilihan: <strong>30×20mm</strong> (kecil), <strong>40×25mm</strong>
+                                (standar), <strong>60×40mm</strong> (besar), <strong>100×50mm</strong> (untuk dus).
+                            </div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">4</div>
+                        <div class="sc">
+                            <div class="st">Atur Jumlah Label</div>
+                            <div class="sd">Gunakan tombol +/− atau ketik langsung jumlah label per produk.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">5</div>
+                        <div class="sc">
+                            <div class="st">Preview & Cetak</div>
+                            <div class="sd">Klik <strong>Preview</strong> untuk lihat tampilan, lalu <strong>Cetak
+                                    Sekarang</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="callout info">
+                    <div class="ci">💡</div>
+                    <div class="cb">Label otomatis menampilkan nama toko (dari Pengaturan), nama produk, harga jual, dan
+                        barcode SKU.</div>
+                </div>
+            </div>
+
+            <!-- RESTOCK -->
+            <div class="section" id="restock">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fffbeb;">🚛</div>
+                    <div>
+                        <div class="sec-title">Restock / Purchase Order (PO)</div>
+                        <div class="sec-sub">Catat barang masuk dari supplier</div>
+                    </div>
+                </div>
+                <div class="steps">
+                    <div class="si">
+                        <div class="sn">1</div>
+                        <div class="sc">
+                            <div class="st">Pilih Supplier</div>
+                            <div class="sd">Di panel kanan, pilih supplier dari dropdown. Klik <strong>+</strong> untuk
+                                tambah supplier baru.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">2</div>
+                        <div class="sc">
+                            <div class="st">Tambah Produk ke Daftar PO</div>
+                            <div class="sd">Cari produk di panel kiri → klik <strong>+</strong> → atur harga beli dan
+                                jumlah yang masuk.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">3</div>
+                        <div class="sc">
+                            <div class="st">Klik SIMPAN PO</div>
+                            <div class="sd">Stok otomatis bertambah. HPP dihitung ulang menggunakan metode rata-rata
+                                bergerak.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPNAME -->
+            <div class="section" id="opname">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f5f3ff;">📋</div>
+                    <div>
+                        <div class="sec-title">Stok Opname</div>
+                        <div class="sec-sub">Sesuaikan stok sistem dengan stok fisik</div>
+                    </div>
+                </div>
+                <div class="callout warning">
+                    <div class="ci">⚠️</div>
+                    <div class="cb"><strong>Lakukan Saat Toko Tutup</strong>Jangan ada transaksi POS saat opname
+                        berlangsung agar data tidak bertabrakan.</div>
+                </div>
+                <div class="steps">
+                    <div class="si">
+                        <div class="sn">1</div>
+                        <div class="sc">
+                            <div class="st">Export Form</div>
+                            <div class="sd">Klik <strong>Export Form</strong> → file Excel terunduh. Bagikan ke tim
+                                untuk diisi jumlah stok fisiknya.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">2</div>
+                        <div class="sc">
+                            <div class="st">Isi Kolom "Cek Fisik"</div>
+                            <div class="sd">Isi kolom <em>Cek Fisik (Tulis Manual)</em> dengan hasil hitung fisik. Kolom
+                                lain jangan diubah.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">3</div>
+                        <div class="sc">
+                            <div class="st">Import Kembali</div>
+                            <div class="sd">Klik <strong>Import</strong> → pilih file Excel → data otomatis terisi di
+                                aplikasi.</div>
+                        </div>
+                    </div>
+                    <div class="si">
+                        <div class="sn">4</div>
+                        <div class="sc">
+                            <div class="st">Periksa & Simpan</div>
+                            <div class="sd">Kolom Selisih otomatis terhitung (+ = lebih, − = kurang). Periksa, lalu klik
+                                <strong>Simpan Opname</strong>. Stok langsung terupdate.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>Bisa juga isi kolom Cek Fisik langsung di aplikasi tanpa import Excel.</p>
+            </div>
+
+            <!-- PELANGGAN -->
+            <div class="section" id="pelanggan">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f0fdf4;">👥</div>
+                    <div>
+                        <div class="sec-title">Master Pelanggan</div>
+                        <div class="sec-sub">Kelola data pelanggan toko</div>
+                    </div>
+                </div>
+                <h3>Tambah Pelanggan</h3>
+                <ul>
+                    <li><strong>Saat transaksi POS (cepat):</strong> Klik ikon 👤+ di panel pelanggan → isi nama, WA,
+                        kelompok harga → Simpan.</li>
+                    <li><strong>Di Master Pelanggan (lengkap):</strong> Menu Master Pelanggan → <strong>+
+                            Tambah</strong> → isi form.</li>
+                </ul>
+                <h3>Edit, Hapus & Cari</h3>
+                <ul>
+                    <li><strong>Edit:</strong> Klik ✏️ pada baris pelanggan.</li>
+                    <li><strong>Hapus:</strong> Klik 🗑️. Riwayat transaksi tetap tersimpan.</li>
+                    <li><strong>Cari:</strong> Gunakan kolom pencarian (nama atau nomor WA) dan filter dropdown kelompok
+                        harga.</li>
+                </ul>
+            </div>
+
+            <!-- TIER -->
+            <div class="section" id="tier">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fffbeb;">🏷️</div>
+                    <div>
+                        <div class="sec-title">Kelompok Harga Pelanggan</div>
+                        <div class="sec-sub">Sistem multi-harga otomatis berdasarkan kelompok</div>
+                    </div>
+                </div>
+                <p>Setiap pelanggan bisa masuk ke kelompok tertentu. Saat pelanggan dipilih di POS, harga otomatis
+                    menyesuaikan.</p>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Kelompok</th>
+                            <th>Harga yang Dipakai di POS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge b-slate">UMUM</span></td>
+                            <td>Harga jual normal — default untuk semua pelanggan</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge b-blue">GROSIR</span></td>
+                            <td>Harga Grosir — juga berlaku otomatis jika qty ≥ minimal grosir produk</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge b-amber">RESELLER</span></td>
+                            <td>Harga Reseller — kolom Harga Reseller di Master Produk</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge b-purple">VIP</span></td>
+                            <td>Harga Satuan Besar (Dus/Karton)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge b-green">Custom</span></td>
+                            <td>Kelompok tambahan — diatur di Pengaturan Toko</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout info">
+                    <div class="ci">➕</div>
+                    <div class="cb"><strong>Tambah Kelompok Baru</strong>Buka <strong>Pengaturan Toko → Kelompok Harga
+                            Pelanggan</strong>, tambahkan nama kelompok baru dipisah koma:
+                        <code>UMUM,GROSIR,RESELLER,VIP,AGEN</code> → Simpan.
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUPPLIER -->
+            <div class="section" id="supplier">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fef2f2;">🚚</div>
+                    <div>
+                        <div class="sec-title">Master Supplier</div>
+                        <div class="sec-sub">Kelola data pemasok</div>
+                    </div>
+                </div>
+                <p>Menu <strong>Master Supplier</strong> menampilkan semua data supplier. Klik <strong>+ Tambah</strong>
+                    untuk baru, ✏️ untuk edit, 🗑️ untuk hapus.</p>
+                <p>Data yang bisa diisi: <strong>Nama</strong>, <strong>Nomor WA/Telepon</strong>, dan
+                    <strong>Alamat/Keterangan</strong>.
+                </p>
+                <p>Supplier juga bisa ditambah langsung dari halaman Restock PO dengan klik ikon <strong>+</strong> di
+                    sebelah dropdown supplier.</p>
+            </div>
+
+            <!-- LAPORAN -->
+            <div class="section" id="laporan">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#eff6ff;">📊</div>
+                    <div>
+                        <div class="sec-title">Laporan Penjualan</div>
+                        <div class="sec-sub">Lihat dan export data penjualan</div>
+                    </div>
+                </div>
+                <h3>Filter Laporan</h3>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Filter</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tanggal Mulai – Sampai</td>
+                            <td>Tampilkan transaksi dalam rentang tanggal tertentu</td>
+                        </tr>
+                        <tr>
+                            <td>Kategori</td>
+                            <td>Filter hanya produk dari kategori tertentu</td>
+                        </tr>
+                        <tr>
+                            <td>Kasir</td>
+                            <td>Filter berdasarkan kasir yang melakukan transaksi</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Fitur Tambahan</h3>
+                <ul>
+                    <li>Klik <strong>Peringkat</strong> untuk lihat 15 produk paling laris berdasarkan laba.</li>
+                    <li>Klik <strong>Nilai Aset</strong> untuk lihat total modal yang tertanam di stok saat ini.</li>
+                    <li>Klik <strong>Excel</strong> untuk unduh laporan sesuai filter aktif dalam format .xlsx.</li>
+                </ul>
+            </div>
+
+            <!-- P&L -->
+            <div class="section" id="pl">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f0fdf4;">⚖️</div>
+                    <div>
+                        <div class="sec-title">P&L / Laporan Laba Rugi</div>
+                        <div class="sec-sub">Kondisi keuangan toko secara menyeluruh</div>
+                    </div>
+                </div>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Baris</th>
+                            <th>Artinya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Omset Bruto</strong></td>
+                            <td>Total pendapatan dari semua penjualan</td>
+                        </tr>
+                        <tr>
+                            <td>− Diskon</td>
+                            <td>Total potongan yang diberikan ke pelanggan</td>
+                        </tr>
+                        <tr>
+                            <td>− PPN</td>
+                            <td>Pajak yang dipungut</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Omset Neto</strong></td>
+                            <td>Pendapatan setelah diskon dan pajak</td>
+                        </tr>
+                        <tr>
+                            <td>− HPP</td>
+                            <td>Modal barang yang sudah terjual</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Laba Kotor</strong></td>
+                            <td>Keuntungan sebelum biaya operasional</td>
+                        </tr>
+                        <tr>
+                            <td>− Pengeluaran</td>
+                            <td>Biaya operasional yang dicatat manual</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#10b981;">Laba Bersih</strong></td>
+                            <td>Keuntungan sesungguhnya toko</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Cara Pakai</h3>
+                <ol>
+                    <li>Pilih tanggal mulai dan sampai → klik <strong>Hitung</strong></li>
+                    <li>Laporan P&L, grafik kategori, dan tren harian tampil</li>
+                    <li>Tabel pengeluaran di bagian bawah — klik <strong>+ Tambah</strong> untuk input biaya baru</li>
+                </ol>
+            </div>
+
+            <!-- PENGELUARAN -->
+            <div class="section" id="pengeluaran">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fef2f2;">💸</div>
+                    <div>
+                        <div class="sec-title">Catat Pengeluaran</div>
+                        <div class="sec-sub">Input biaya operasional toko</div>
+                    </div>
+                </div>
+                <p>Pengeluaran perlu dicatat agar Laba Bersih di P&L akurat. Contoh: gaji, listrik, sewa, transportasi,
+                    iklan.</p>
+                <ol>
+                    <li>Buka menu <strong>P&L / Keuangan</strong></li>
+                    <li>Klik <strong>+ Catat Pengeluaran</strong></li>
+                    <li>Pilih <strong>Kategori</strong>, isi <strong>Deskripsi</strong> dan <strong>Nominal</strong> →
+                        Simpan</li>
+                </ol>
+                <p>Klik 🗑️ pada baris pengeluaran untuk hapus entri yang salah.</p>
+            </div>
+
+            <!-- PROMO -->
+            <div class="section" id="promo">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#fffbeb;">🎁</div>
+                    <div>
+                        <div class="sec-title">Kelola Promo & Voucher</div>
+                        <div class="sec-sub">Buat dan atur kode diskon (Admin only)</div>
+                    </div>
+                </div>
+                <h3>Buat Promo Baru</h3>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Kode Voucher</td>
+                            <td>Kode yang diketik kasir. Otomatis kapital. Contoh: <code>LEBARAN10</code></td>
+                        </tr>
+                        <tr>
+                            <td>Tipe Diskon</td>
+                            <td>Persentase (%) atau Nominal (Rp)</td>
+                        </tr>
+                        <tr>
+                            <td>Nilai</td>
+                            <td><code>10</code> untuk 10%, atau <code>50000</code> untuk Rp 50.000</td>
+                        </tr>
+                        <tr>
+                            <td>Minimal Belanja</td>
+                            <td>Subtotal minimum agar voucher berlaku. <code>0</code> jika tidak ada batas.</td>
+                        </tr>
+                        <tr>
+                            <td>Masa Berlaku</td>
+                            <td>Tanggal mulai dan berakhir. Di luar tanggal ini voucher otomatis tidak valid.</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>Aktif atau Nonaktif. Bisa dinonaktifkan sementara tanpa dihapus.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- USER -->
+            <div class="section" id="user">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f5f3ff;">👤</div>
+                    <div>
+                        <div class="sec-title">Manajemen User</div>
+                        <div class="sec-sub">Kelola akun dan hak akses pengguna</div>
+                    </div>
+                </div>
+                <h3>Hak Akses per Role</h3>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Menu / Fitur</th>
+                            <th style="text-align:center">Admin</th>
+                            <th style="text-align:center">Kasir</th>
+                            <th style="text-align:center">Demo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dashboard</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcross">—</td>
+                            <td class="rcheck">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Kasir (POS)</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcheck">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Restock, Opname, Produk</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcross">—</td>
+                            <td class="rcheck">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Laporan, P&L, Promo</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcross">—</td>
+                            <td class="rcheck">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Manajemen User</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcross">—</td>
+                            <td class="rcross">—</td>
+                        </tr>
+                        <tr>
+                            <td>Pengaturan Toko</td>
+                            <td class="rcheck">✓</td>
+                            <td class="rcross">—</td>
+                            <td class="rcheck">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="callout info">
+                    <div class="ci">ℹ️</div>
+                    <div class="cb"><strong>Role Demo</strong> cocok untuk akuntan atau pemilik yang hanya perlu lihat
+                        laporan tanpa bisa ubah data apapun.</div>
+                </div>
+                <h3>Tambah User Baru</h3>
+                <p>Menu <strong>Manajemen User</strong> → <strong>+ Tambah User Baru</strong> → isi username, password,
+                    pilih role dan status → Simpan.</p>
+                <h3>Nonaktifkan User</h3>
+                <p>Klik ✏️ → ubah status ke <strong>Nonaktif</strong> → Simpan. User tidak bisa login tapi riwayat
+                    transaksinya tetap tersimpan.</p>
+            </div>
+
+            <!-- PENGATURAN -->
+            <div class="section" id="pengaturan">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f1f5f9;">⚙️</div>
+                    <div>
+                        <div class="sec-title">Pengaturan Toko</div>
+                        <div class="sec-sub">Konfigurasi identitas dan preferensi toko</div>
+                    </div>
+                </div>
+                <table class="dtable">
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nama Toko</td>
+                            <td>Tampil di header app, struk, dan notifikasi</td>
+                        </tr>
+                        <tr>
+                            <td>Alamat Lengkap</td>
+                            <td>Tampil di struk thermal</td>
+                        </tr>
+                        <tr>
+                            <td>Pesan Footer Struk</td>
+                            <td>Teks di bagian bawah struk</td>
+                        </tr>
+                        <tr>
+                            <td>Logo Toko (URL)</td>
+                            <td>URL gambar logo di struk. Upload foto ke <strong>imgbb.com</strong> untuk dapat URL.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ukuran Kertas Thermal</td>
+                            <td>58mm (printer kecil) atau 80mm (printer besar)</td>
+                        </tr>
+                        <tr>
+                            <td>Nomor WA Admin</td>
+                            <td>Menerima notifikasi stok menipis harian</td>
+                        </tr>
+                        <tr>
+                            <td>Batas Stok Menipis</td>
+                            <td>Produk dengan stok ≤ angka ini masuk peringatan. Default: 10</td>
+                        </tr>
+                        <tr>
+                            <td>Tarif PPN (%)</td>
+                            <td>Default: 11%. Isi 0 jika tidak pakai PPN.</td>
+                        </tr>
+                        <tr>
+                            <td>Kelompok Harga Pelanggan</td>
+                            <td>Daftar kelompok, pisah koma: <code>UMUM,GROSIR,RESELLER,VIP,AGEN</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Setelah mengubah setting, selalu klik <strong>Simpan Semua</strong> di pojok kanan atas.</p>
+                <div class="callout danger">
+                    <div class="ci">🚨</div>
+                    <div class="cb"><strong>Zona Bahaya — Hapus Semua Data Transaksi</strong>Menghapus SELURUH riwayat
+                        penjualan secara permanen. Data produk dan user tetap aman. Hanya gunakan jika ingin mulai dari
+                        awal.</div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="section" id="faq">
+                <div class="sec-header">
+                    <div class="sec-icon" style="background:#f0fdf4;">❓</div>
+                    <div>
+                        <div class="sec-title">FAQ & Troubleshooting</div>
+                        <div class="sec-sub">Pertanyaan umum dan solusi masalah</div>
+                    </div>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Produk yang saya tambah tidak muncul di POS<span
+                                class="faq-tog">+</span></div>
+                        <div class="faq-a">Coba reload halaman (F5). Pastikan kolom SKU dan Harga Jual sudah terisi di
+                            Master Produk. Produk tanpa SKU tidak akan muncul.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Stok tidak berkurang setelah transaksi<span
+                                class="faq-tog">+</span></div>
+                        <div class="faq-a">Periksa badge "Pending" di pojok kanan atas — klik untuk sinkronisasi manual.
+                            Stok baru berkurang setelah data berhasil tersinkron ke server. Pastikan internet aktif.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Voucher tidak bisa dipakai / muncul pesan
+                            error<span class="faq-tog">+</span></div>
+                        <div class="faq-a">Periksa: (1) kode sudah benar, (2) tanggal masih dalam masa berlaku, (3)
+                            subtotal sudah memenuhi minimal belanja. Konfirmasi ke admin untuk cek pengaturan voucher.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Struk tidak muncul / dialog print tidak
+                            terbuka<span class="faq-tog">+</span></div>
+                        <div class="faq-a">Browser memblok popup. Klik ikon 🔒 di address bar → Izinkan popup untuk site
+                            ini → coba lagi.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Harga tidak berubah saat pilih pelanggan Grosir /
+                            Reseller<span class="faq-tog">+</span></div>
+                        <div class="faq-a">Pastikan harga untuk kelompok tersebut sudah diisi di Master Produk (kolom
+                            Harga Grosir / Harga Reseller). Jika 0 atau kosong, sistem tetap pakai harga normal.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Laba di P&L tidak sesuai ekspektasi<span
+                                class="faq-tog">+</span></div>
+                        <div class="faq-a">Pastikan: (1) HPP sudah diisi benar di semua produk, (2) semua pengeluaran
+                            operasional sudah dicatat, (3) periode filter sudah sesuai.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">Salah input transaksi, bagaimana cara
+                            membatalkan?<span class="faq-tog">+</span></div>
+                        <div class="faq-a">Buat transaksi Retur untuk produk yang salah diinput — stok kembali dan
+                            tercatat sebagai transaksi minus. Hubungi admin jika perlu koreksi lebih lanjut.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center;padding:48px 0 24px;border-top:1px solid var(--border);">
+                <div style="font-size:13px;color:var(--muted);">Panduan Penggunaan StokKu ERP v2.1</div>
+                <div style="font-size:12px;color:#d1d5db;margin-top:6px;">Untuk bantuan teknis, hubungi tim support
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const secs = document.querySelectorAll('.section[id],.cover[id]');
+        const links = document.querySelectorAll('.sidebar a');
+        window.addEventListener('scroll', () => {
+            let cur = '';
+            secs.forEach(s => { if (window.scrollY >= s.offsetTop - 130) cur = s.id; });
+            links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+        }, { passive: true });
+        function toggleFaq(el) {
+            const item = el.closest('.faq-item');
+            const open = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+            if (!open) item.classList.add('open');
+        }
+    </script>
+</body>
+
+</html>"""
+
+with open('/mnt/user-data/outputs/dokumentasi.html', 'w') as f:
+f.write(content)
+print(f"Done. Lines: {content.count(chr(10))} | Size: {len(content)//1024}KB")
