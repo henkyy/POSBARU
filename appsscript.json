@@ -1,0 +1,19 @@
+{
+  "timeZone": "Asia/Bangkok",
+  "dependencies": {
+    "libraries": [
+      {
+        "userSymbol": "KasirLib",
+        "libraryId": "1fIN_NA5v-1PMysrTpX-vLW_XqUKk3yCxur-txsC34DMNIlupBSN1SGfw",
+        "version": "0",
+        "developmentMode": true
+      }
+    ]
+  },
+  "webapp": {
+    "executeAs": "USER_DEPLOYING",
+    "access": "ANYONE_ANONYMOUS"
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}

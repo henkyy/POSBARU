@@ -70,27 +70,19 @@ function isAdmin(username) {
 //  ENTRY POINT
 // ─────────────────────────────────────────────────────────────
 function doGet(e) {
+  const page = String((e && e.parameter && e.parameter.page) || "").toLowerCase();
+  if (page === "dokumentasi") {
+    return HtmlService.createHtmlOutputFromFile('dokumentasi')
+      .setTitle('Panduan StokKu')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+
   return HtmlService.createTemplateFromFile('Index')
     .evaluate()
     .setTitle('StokKu')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
-
-// ─────────────────────────────────────────────────────────────
-//  UTILITY — Script URL (dipanggil oleh openDokumentasi di frontend)
-// ─────────────────────────────────────────────────────────────
-/**
- * Mengembalikan URL deploy Web App saat ini.
- * Digunakan oleh panel dokumentasi untuk membuat iframe src yang benar.
- * @returns {string} URL string, atau null jika gagal
- */
-function getScriptUrl() {
-  try {
-    return ScriptApp.getService().getUrl();
-  } catch (e) {
-    return null;
-  }
 }
 
 // ─────────────────────────────────────────────────────────────
